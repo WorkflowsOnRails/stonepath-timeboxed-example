@@ -1,0 +1,24 @@
+<% content_for :banner do %>
+  View Issues
+<% end %>
+
+<table class="table table-striped">
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr>
+        <td><%= issue.id %></td>
+        <td><%= link_to issue.title, issue %></td>
+        <td><%= issue.deployment_date %></td>
+        <td><%= issue.signed_off %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>Deployment Date</th>
+      <th>Signed Off</th>
+    </tr>
+  </thead>
+</table>

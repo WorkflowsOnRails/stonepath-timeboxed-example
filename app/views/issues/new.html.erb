@@ -1,0 +1,14 @@
+<% content_for :banner do %>
+  Create an Issue
+<% end %>
+
+<%= simple_form_for @issue, class: 'form-horizontal' do |f| %>
+  <%= f.input :title, label: 'Issue Title', required: true %>
+  <%= f.input :description, required: true %>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <%= f.button :submit, class: 'btn btn-success' %>
+      <%= link_to 'Cancel', :back, class: 'btn btn-default' %>
+    </div>
+  </div>
+<% end %>

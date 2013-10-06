@@ -1,0 +1,66 @@
+body {
+  background: #eee;
+}
+
+.flashes {
+  margin: 20px 40px;
+}
+
+.body {
+  margin: 20px 40px;
+  background: #fff;
+  padding: 0 0 20px;
+  min-height: 400px;
+}
+
+.content {
+  padding: 0 40px;
+}
+
+.no-margin-collapse {
+  height: 0;
+  font-size: 0;
+}
+
+.alert {
+  padding: 10px 15px;
+}
+
+/* TODO: Adjust color of alert borders. */
+
+.banner-header {
+  height: 100px;
+  position: relative;
+
+  .banner {
+    position: absolute;
+    left: -15px;
+    right: -15px;
+    top: 0;
+  }
+
+  h1 {
+    background: #CA2E2E;
+    margin: 0;
+    padding: 10px 40px;
+    color: #f9f9f9;
+    text-shadow: 2px 2px 1px #333;
+  }
+
+  .btn {
+    text-shadow: none;
+  }
+
+  .corner-bottom {
+    font-size: 0px; line-height: 0%; width: 0px;
+    border-top: 15px solid #800D0D;
+  }
+  .corner-left {
+    border-left: 15px solid transparent;
+    float: left;
+  }
+  .corner-right {
+    float: right;
+    border-right: 15px solid transparent;
+  }
+}

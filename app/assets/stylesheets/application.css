@@ -1,0 +1,75 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require bootstrap_and_overrides
+ *= require_self
+ *= require_tree .
+ */
+
+.body {
+    padding: 0 40px;
+}
+
+.spacer {
+    display: block;
+    margin-top: 60px;
+}
+
+h1 {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+h1 .btn.pull-right,
+h1 .btn-group.pull-right {
+    position: relative;
+    top: 2px;
+}
+
+.btn-link,
+.btn-link:hover {
+    text-decoration: none;
+}
+
+.form-inline {
+    display: inline-block;
+}
+
+.date.form-control,
+.datetime.form-control {
+    display: inline-block;
+    width: auto;
+}
+
+.button_to,
+.button_to div {
+    display: inline;
+}
+
+td.empty-table-message {
+    text-align: center;
+}
+
+.work-logs-table {
+    table-layout: fixed;
+}
+
+.work-logs-table-project-name {
+    width: 20%;
+}
+
+.work-logs-table-hours {
+    width: 100px;
+}
+
+.work-logs-table-actions {
+    width: 75px;
+}
+ */

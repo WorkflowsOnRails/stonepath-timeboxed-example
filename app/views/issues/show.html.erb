@@ -1,0 +1,45 @@
+<% content_for :banner do %>
+  <%= @issue.title %>
+
+  <%= button_to 'Claim Issue', claim_issue_path(@issue),
+      class: 'btn btn-primary pull-right' %>
+<% end %>
+
+<div class="form-horizontal">
+  <%= render partial: 'shared/field', locals: {
+        label: 'Reporter',
+        content: @issue.owner.nil? ? 'None' : @issue.owner.email
+      }
+   %>
+  <%= render partial: 'shared/field', locals: {
+        label: 'Developer',
+        content: @issue.developer.nil? ? 'None' : @issue.developer.email
+      }
+   %>
+  <div class="form-group">
+    <label class="control-label col-md-2">Deployment Date</label>
+    <div class="col-md-10">
+      <% if current_user_in_role(:deployer) %>
+        <%= form_for @issue,
+            url: {action: "schedule_deployment"},
+            html: {method: 'post'} do |f| %>
+          <%= f.date_select :deployment_date, {},
+              {class: 'date form-control'} %>
+          <%= f.button 'Schedule Deployment', class: 'btn btn-success' %>
+        <% end %>
+      <% else %>
+        <p class="form-control-static">
+          <%= @issue.deployment_date.nil? ? 'None' : @issue.deployment_date %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2">Description</label>
+    <div class="col-md-10">
+      <%= simple_format @issue.description,
+          {class: 'form-control-static'},
+          wrapper_tag: 'address' %>
+    </div>
+  </div>
+</div>
