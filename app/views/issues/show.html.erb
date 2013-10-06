@@ -1,8 +1,13 @@
 <% content_for :banner do %>
   <%= @issue.title %>
 
-  <%= button_to 'Claim Issue', claim_issue_path(@issue),
-      class: 'btn btn-primary pull-right' %>
+  <% if current_user_in_role(:developer) && @issue.aasm_state == 'pending' %>
+    <%= button_to 'Claim Issue', claim_issue_path(@issue),
+        class: 'btn btn-primary pull-right' %>
+  <% elsif current_user == @issue.developer %>
+    <%= button_to 'Sign Off', sign_off_issue_path(@issue),
+        class: 'btn btn-primary pull-right' %>
+  <% end %>
 <% end %>
 
 <div class="form-horizontal">
@@ -39,7 +44,21 @@
     <div class="col-md-10">
       <%= simple_format @issue.description,
           {class: 'form-control-static'},
-          wrapper_tag: 'address' %>
+          wrapper_tag: 'div' %>
     </div>
   </div>
 </div>
+
+<div class="spacer"></div>
+
+<h2>Comments</h2>
+<%= render @issue.comments %>
+
+<%= simple_form_for [@issue, @issue.comments.build], class: 'form-horizontal' do |f| %>
+  <%= f.input :comment, label: 'New Comment', required: true %>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <%= f.button :submit, class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

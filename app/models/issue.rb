@@ -5,6 +5,7 @@ class Issue < ActiveRecord::Base
   validates :description, presence: true, allow_nil: false
 
   belongs_to :developer, class_name: 'User'
+  has_many :comments
   owned_by :user
   tasked_through :task
 
@@ -36,7 +37,7 @@ class Issue < ActiveRecord::Base
   scope :unscheduled, -> { where(deployment_date: nil) }
 
   def self.assigned_to_developer(user)
-    where(developer: user)
+    open.where(developer: user)
   end
 
   ### entry / exit actions ###
@@ -46,7 +47,6 @@ class Issue < ActiveRecord::Base
   end
 
   def destroy_claim_task
-    binding.pry
     Task.find_assignment(workbench: Role.developer, workitem: self).destroy
   end
 

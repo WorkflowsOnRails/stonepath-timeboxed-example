@@ -8,8 +8,11 @@ class ApplicationController < ActionController::Base
   # TODO: Start using Cancan instead.
   def require_role(role_name)
     unless current_user.role.name == role_name
-      render status: 403
+      flash[:error] = 'Access denied'
+      redirect_to '/'
+      return false
     end
+    true
   end
 
   protected

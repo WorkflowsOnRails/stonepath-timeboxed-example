@@ -18,9 +18,11 @@ StonepathExample::Application.routes.draw do
   end
 
   resources :issues, only: [:index, :new, :create, :show] do
+    resources :comments, only: [:create]
     member do
       post 'claim'
       post 'schedule_deployment'
+      post 'sign_off'
     end
     collection do
       get 'list_pending'

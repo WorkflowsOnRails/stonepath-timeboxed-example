@@ -57,19 +57,6 @@ td.empty-table-message {
     text-align: center;
 }
 
-.work-logs-table {
-    table-layout: fixed;
+.comment-commenter {
+    font-style: italic;
 }
-
-.work-logs-table-project-name {
-    width: 20%;
-}
-
-.work-logs-table-hours {
-    width: 100px;
-}
-
-.work-logs-table-actions {
-    width: 75px;
-}
- */
