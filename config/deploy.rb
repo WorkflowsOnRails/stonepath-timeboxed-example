@@ -13,12 +13,14 @@ set :rails_env, 'staging'
 set :migration_role, 'db'
 
 
-namespace :deploy do
-  desc 'Set up deployment target'
-  task :setup do
-    # TODO
+namespace :setup do
+  task :database do
+    
   end
+end
 
+
+namespace :deploy do
   desc 'Export supervisord configuration'
   task :foreman do
     on roles(:app), in: :groups do
@@ -35,13 +37,27 @@ namespace :deploy do
 
   after 'deploy:updated', 'deploy:foreman'
 
+  # TODO: db:seed isn't the right place for this logic, we should
+  #       just add a new task to rake.
+  desc 'Add any required dynamic database objects'
+  task :seed do
+    on roles(:db), in: :sequence do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:seed"
+        end
+      end
+    end
+  end
+
+  after 'deploy:updated', 'deploy:seed'
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :kill, "-HUP `cat #{deploy_path}/supervisord.pid`"
     end
   end
-
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do

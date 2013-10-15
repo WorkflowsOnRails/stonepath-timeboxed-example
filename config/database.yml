@@ -19,7 +19,11 @@ test:
   timeout: 5000
 
 staging:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: stonepath-example
+  host: /var/run/postgresql
+  port: 5433
   pool: 5
   timeout: 5000
+  username: application
+  password:
