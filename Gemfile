@@ -37,7 +37,7 @@ group :development do
 end
 
 group :development do
-  gem 'capistrano', group: :development
-  gem 'capistrano-bundler', group: :development
-  gem 'capistrano-rails', group: :development
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
 end
