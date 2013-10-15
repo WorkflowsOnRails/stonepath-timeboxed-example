@@ -8,38 +8,9 @@ set :scm, :git
 set :branch, 'master'
 
 set :deploy_to, "/srv/#{application}"
-set :linked_files, ["config/database.yml"]
 
 set :rails_env, 'staging'
-set :migration_role, 'application'
-
-
-namespace :db do
-  desc "Create database yaml in shared path"
-  task :configure do
-    database_username = 'application'
-    database_password = ask(:database_password, "password")
-
-    db_config = <<-EOF
-      base: &base
-        adapter: sqlite3
-        encoding: utf8
-        reconnect: false
-        pool: 5
-
-      staging:
-        database: #{application}_production
-        username: #{database_username}
-        password: #{database_password.call}
-        <<: *base
-    EOF
-
-    on roles(:web), in: :groups do
-      execute "mkdir -p #{shared_path}/config"
-      upload! StringIO.new(db_config), "#{shared_path}/config/database.yml"
-    end
-  end
-end
+set :migration_role, 'db'
 
 
 namespace :deploy do
@@ -48,11 +19,26 @@ namespace :deploy do
     # TODO
   end
 
+  desc 'Export supervisord configuration'
+  task :foreman do
+    on roles(:app), in: :groups do
+      within release_path do
+        execute :bundle,
+                "exec foreman export supervisord supervisor",
+                "--template #{release_path}/lib/supervisord_templates",
+                "--log #{release_path}/supervisor/log",
+                "--app application",
+                "--env #{shared_path}/.env"
+      end
+    end
+  end
+
+  after 'deploy:updated', 'deploy:foreman'
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :kill, "-HUP `cat #{deploy_path}/supervisord.pid`"
     end
   end
 
@@ -69,5 +55,3 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
 
 end
-
-before "deploy:setup", "db:configure"
