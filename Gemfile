@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'sqlite3', group: :development
-gem 'pg'
+gem 'pg', group: :production
 
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
@@ -18,7 +18,7 @@ gem 'simple_form', '~> 3.0.0rc'
 gem 'will_paginate', '~> 3.0.0'
 gem 'stonepath', git: 'https://github.com/WorkflowsOnRails/stonepath.git', branch: 'rails-4'
 
-gem 'unicorn'
+gem 'puma'
 gem 'foreman'
 
 group :doc do
